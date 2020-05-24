@@ -2,29 +2,20 @@ import React from "react";
 import EmployeeForm from "../EmployeeForm/EmployeeForm";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { addEmployee } from "../../../services/employeeService";
 
 const EmployeeAdd = () => {
     const history = useHistory();
     
-    const addEmployee = (employee) => {
-        fetch(`http://localhost:4000/api/employees/add`, {
-            method: 'post',
-            body: JSON.stringify(employee),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            if (response.ok) {
-                return history.push("/employees");
-             }
-             console.error(response);
-        })
+    const handleSubmit = async (employee) => {
+        await addEmployee(employee);
+        return history.push("/employees");
     }
 
     return (
         <div className="container form-container">
             <h1>Add Employee</h1>
-            <EmployeeForm employee={{}} submitButtonText="Add" onFormSubmit={addEmployee} />
+            <EmployeeForm employee={{}} submitButtonText="Add" onFormSubmit={handleSubmit} />
             <br/>           
             <Button variant="secondary" href="/employees">Go back to Employees</Button>
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import EmployeeForm from "../EmployeeForm/EmployeeForm";
 import { Button } from "react-bootstrap";
+import { getEmployee, updateEmployee } from "../../../services/employeeService";
 
 export default class EmployeeUpdate extends React.Component {
     constructor(props) {
@@ -12,37 +13,24 @@ export default class EmployeeUpdate extends React.Component {
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        this.getEmployee(id);
+        this.getData(id);
     }
 
-    getEmployee = (id) => {        
-        fetch(`http://localhost:4000/api/employees/${id}`)
-            .then(response => response.json())
-            .then(data => {
-                this.setState({employee: data});
-            });
+    getData = async (id) => {        
+        const employee = await getEmployee(id)
+        this.setState({employee: employee});
     }
 
-    updateEmployee = (employee) => {
-        fetch('http://localhost:4000/api/employees/update', {
-            method: 'put',
-            body: JSON.stringify(employee),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            if (response.ok) {
-               return this.props.history.push("/employees");
-            }
-            console.error(response);
-        })
+    handleSubmit = async (employee) => {
+        await updateEmployee(employee)
+        return this.props.history.push("/employees");
     }
 
     render() {
         return (
             <div className="container form-container">
                 <h1>Update Employee</h1>
-                <EmployeeForm employee={this.state.employee} submitButtonText="update" onFormSubmit={this.updateEmployee} />
+                <EmployeeForm employee={this.state.employee} submitButtonText="update" onFormSubmit={this.handleSubmit} />
                 <br/>           
                 <Button variant="secondary" href="/employees">Go back to Employees</Button>
             </div>

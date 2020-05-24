@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Employee from "./Employee/Employee.js";
 import { Table, Button } from "react-bootstrap";
+import { getEmployees } from "../../../services/employeeService";
 import "./EmployeeList.css";
 
 export default class EmployeeList extends Component {
@@ -11,15 +12,14 @@ export default class EmployeeList extends Component {
         }
     }
 
-    getEmployees = () => {
-        fetch("http://localhost:4000/api/employees")
-            .then((response) => response.json())
-            .then(data => this.setState({employees: data})); 
+    componentDidMount() {
+        this.getData();
     }
 
-    componentDidMount() {
-        this.getEmployees();
-    }
+    getData = async () => {
+        const employees = await getEmployees();
+        this.setState({employees: employees}); 
+    }    
 
     render() {
         return (
