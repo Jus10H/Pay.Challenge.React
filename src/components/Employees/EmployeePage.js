@@ -1,7 +1,7 @@
 import React from "react";
-import EmployeeList from "./EmployeeList/EmployeeList.js";
-import EmployeeAdd from "./EmployeeAdd/EmployeeAdd.js";
-import EmployeeUpdate from "./EmployeeUpdate/EmployeeUpdate.js";
+import EmployeeList from "./EmployeeList.js";
+import EmployeeAdd from "./EmployeeAdd.js";
+import EmployeeUpdate from "./EmployeeUpdate.js";
 import { Route, Switch } from "react-router-dom";
 
 export default class EmployeePage extends React.Component {

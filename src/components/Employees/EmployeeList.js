@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Employee from "./Employee/Employee.js";
+import Employee from "./Employee.js";
 import { Table, Button } from "react-bootstrap";
-import { getEmployees } from "../../../services/employeeService";
+import { getEmployees } from "../../services/employeeService";
 import "./EmployeeList.css";
 
 export default class EmployeeList extends Component {

@@ -1,7 +1,7 @@
 import React from "react";
-import EmployeeForm from "../EmployeeForm/EmployeeForm";
+import EmployeeForm from "./EmployeeForm";
 import { Button } from "react-bootstrap";
-import { getEmployee, updateEmployee } from "../../../services/employeeService";
+import { getEmployee, updateEmployee } from "../../services/employeeService";
 
 export default class EmployeeUpdate extends React.Component {
     constructor(props) {

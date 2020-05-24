@@ -1,8 +1,8 @@
 import React from "react";
-import EmployeeForm from "../EmployeeForm/EmployeeForm";
+import EmployeeForm from "./EmployeeForm";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { addEmployee } from "../../../services/employeeService";
+import { addEmployee } from "../../services/employeeService";
 
 const EmployeeAdd = () => {
     const history = useHistory();
