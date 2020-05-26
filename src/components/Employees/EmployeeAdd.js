@@ -2,13 +2,15 @@ import React from "react";
 import EmployeeForm from "./EmployeeForm";
 import { Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { addEmployee } from "../../services/employeeService";
+import { connect } from "react-redux";
+import { addEmployee } from "../../redux/actions/employeeActions";
+import { bindActionCreators } from "redux";
 
-const EmployeeAdd = () => {
+const EmployeeAdd = (props) => {
     const history = useHistory();
     
     const handleSubmit = async (employee) => {
-        await addEmployee(employee);
+        props.addEmployee(employee).catch(error => console.error(error));
         return history.push("/employees");
     }
 
@@ -22,4 +24,14 @@ const EmployeeAdd = () => {
     );
 }
 
-export default EmployeeAdd;
+const mapStateToProps = () => {
+    return {};
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addEmployee: bindActionCreators(addEmployee, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeAdd);

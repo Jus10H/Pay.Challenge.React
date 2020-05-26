@@ -1,25 +1,15 @@
 import React, { Component } from "react";
 import Employee from "./Employee.js";
 import { Table, Button } from "react-bootstrap";
-import { getEmployees } from "../../services/employeeService";
 import "./EmployeeList.css";
+import { connect } from "react-redux";
+import * as employeeActions from "../../redux/actions/employeeActions";
+import { bindActionCreators } from "redux";
 
-export default class EmployeeList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            employees: []
-        }
-    }
-
+class EmployeeList extends Component {
     componentDidMount() {
-        this.getData();
-    }
-
-    getData = async () => {
-        const employees = await getEmployees();
-        this.setState({employees: employees}); 
-    }    
+        this.props.getEmployees().catch(error => console.error(error));
+    }   
 
     render() {
         return (
@@ -38,7 +28,7 @@ export default class EmployeeList extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.employees.map((employee) => (
+                            {this.props.employees.map((employee) => (
                                 <Employee key={employee.id} employee={employee} />
                             ))}
                         </tbody>
@@ -50,3 +40,17 @@ export default class EmployeeList extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        employees: state.employees
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getEmployees: bindActionCreators(employeeActions.getEmployees, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeeList);
